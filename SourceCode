@@ -1,0 +1,90 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class EuropeanTownships {
+    public static void main(String []args){
+        //to store output we create list
+        List<String> in;
+        List<List<String>> out=new ArrayList<>();
+
+        //store out put in string array
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+
+        for(int i=0; i<t; i++) {
+            //reset all the values once go threw one township
+            float normalwalls=00.00f;
+            float accentwalls=00.00f;
+
+            //total houses
+            int n = sc.nextInt();
+
+            //take input of walls
+            for (int j = 0; j < n; j++) {
+                 //use delimiter so we can seperate input values by comma
+                sc.useDelimiter("\\D");
+                int b = sc.nextInt();
+                int r = sc.nextInt();
+                int s = sc.nextInt();
+                int h = sc.nextInt();
+                //count walls
+                normalwalls += normalWalls(r, s, h);
+                accentwalls += accentWalls(r, s, h);
+            }
+            //accentcolor required
+            double accentcolor = accentwalls * 1.5;
+            //normal color required
+            double normalcolor = normalwalls * 2.25;
+            //time to paint accentwalls
+            double accenttime = accentwalls * 2.5;
+            //time to paint normal walls
+            double normaltime = normalwalls * 3.25;
+
+            //total time to color one township
+            double totaltime = accenttime + normaltime;
+
+            //store this value in the list of list
+            in = new ArrayList<>();
+            //add total time
+            in.add(String.format("%.2f", totaltime));
+            in.add(String.format("%.2f", accentcolor));
+            in.add(String.format("%.2f", normalcolor));
+            out.add(in);
+
+
+
+        }
+        //close the scanner
+        sc.close();
+
+        //System.out.println(out);
+        //print the output
+        for (int i=0; i<out.size(); i++) {
+            List<String> val=out.get(i);
+            System.out.print("Case #"+ (i+1) +":");
+            for (int j = 0; j < 3; j++) {
+                if(j==2){
+                    System.out.print(val.get(j));
+                }
+                else {
+                    System.out.print(val.get(j) + ",");
+                }
+            }
+            System.out.println();
+        }
+
+
+    }
+    //count accent walls need to paint
+    public static float accentWalls(int r,int s,int h){
+        double a=0.33333;
+        return (float) (((r)*3*(a))+((s)*4*(a))+((h)*6*(a)));
+    }
+    //count normal wall to paint
+    public static float normalWalls(int r,int s, int h){
+        double a=0.66666;
+        return (float) (((r)*3*(a))+((s)*4*(a))+((h)*6*(a)));
+
+    }
+}
